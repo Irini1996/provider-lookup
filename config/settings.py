@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework',  #Added because this project will need an API — meaning endpoints that return JSON data instead of just HTML pages.
     'providers',
 
 ]

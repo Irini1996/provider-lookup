@@ -19,8 +19,8 @@ class Provider(models.Model):
     fax_number = models.CharField(max_length=30, blank=True) # Fax number can have symbols as (+), (-)
  
     
-class Meta:
-        db_table = "provider"   # db_table → sets the exact table name in the database. Without this line, Django would name the table "providers_provider" automatically.
+    class Meta:
+        db_table = "provider"   #db_table → sets the exact table name in the database. Without this line, Django would name the table "providers_provider" automatically.
         
 
 
@@ -28,7 +28,7 @@ class Taxonomy(models.Model):
     taxonomy_code = models.CharField(max_length=10, unique=True) # unique=True → each taxonomy code appears only once in the table.
     taxonomy_classification = models.CharField(max_length=50, blank=True,)
     taxonomy_specialization = models.CharField(max_length=50, blank=True,)
-
+# deleting a Provider or a Taxonomy will automatically delete all related ProviderTaxonomy records.
     class Meta:
         db_table = "taxonomy"  
 
