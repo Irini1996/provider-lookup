@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Provider Lookup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+    /* ----------- BACKGROUND GRADIENT ----------- */
+    body {
+        background: linear-gradient(
+            180deg,
+            #d8eefe 0%,
+            #eef2ff 35%,
+            #ffffff 100%
+        );
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* ----------- NAVBAR ----------- */
+    .navbar {
+        background: #4f46e5; /* deep indigo */
+    }
+    .navbar-brand {
+        color: white !important;
+        font-weight: 600;
+        font-size: 1.45rem;
+        letter-spacing: 0.3px;
+    }
+
+    /* ----------- MAIN CONTAINER ----------- */
+    .content-wrapper {
+        max-width: 980px;
+        margin: 50px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 18px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----------- INPUTS ----------- */
+    .form-control {
+        border-radius: 12px;
+        padding: 10px 14px;
+        border: 1px solid #cbd5e1;
+        transition: border 0.15s ease, box-shadow 0.15s ease;
+        background-color: #fff !important;
+    }
+
+    .form-control:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, .25);
+    }
+
+    /* ----------- LastPass Autofill Remove ----------- */
+    input:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px white inset !important;
+        -webkit-text-fill-color: #000 !important;
+    }
+
+    /* ----------- BUTTON ----------- */
+    .btn-primary {
+        background: #4f46e5;
+        border: none;
+        border-radius: 12px;
+        padding: 10px;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+    .btn-primary:hover {
+        background: #4338ca;
+        transform: translateY(-2px);
+    }
+
+  </style>
+
+</head>
+<body>
+
+<nav class="navbar shadow-sm">
+  <div class="container">
+      <a class="navbar-brand" href="/">Provider Lookup</a>
+  </div>
+</nav>
+
+<div class="content-wrapper">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

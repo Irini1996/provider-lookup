@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Main container with padding, rounded corners, and light background -->
+<div class="container mt-5 p-4 bg-light rounded shadow-sm border">
+    <!-- Page title -->
+
+  <h2 class="mb-4 text-center fw-bold text-primary">Provider Search</h2>
+
+  <!--  Search Form -->
+  <form method="get" class="row g-3 justify-content-center mb-4">
+    <!-- First Name input -->
+    <div class="col-md-2">
+      <input type="text" name="first_name" value="{{ first_name }}" class="form-control" placeholder="First Name">
+    </div>
+ <!-- Last Name input -->
+    <div class="col-md-2">
+      <input type="text" name="last_name" value="{{ last_name }}" class="form-control" placeholder="Last Name">
+    </div>
+    <!-- Organization input -->
+    <div class="col-md-3">
+      <input type="text" name="organization" value="{{ organization }}" class="form-control" placeholder="Organization">
+    </div>
+    <!-- NPI input -->
+    <div class="col-md-2">
+      <input type="text" name="npi" value="{{ npi }}" class="form-control" placeholder="NPI">
+    </div>
+<!-- Street address input -->
+    <div class="col-md-3">
+      <input type="text" name="address" value="{{ address }}" class="form-control" placeholder="Address (Street)">
+    </div>
+    <!-- City input -->
+    <div class="col-md-2">
+      <input type="text" name="city" value="{{ city }}" class="form-control" placeholder="City">
+    </div>
+ <!-- State input -->
+    <div class="col-md-2">
+      <input type="text" name="state" value="{{ state }}" class="form-control" placeholder="State">
+    </div>
+ <!-- ZIP / Postal Code input -->
+    <div class="col-md-2">
+      <input type="text" name="postal_code" value="{{ postal_code }}" class="form-control" placeholder="ZIP">
+    </div>
+ <!-- Taxonomy textbox with autocomplete dropdown -->
+    <div class="col-md-3 position-relative">
+      <input type="text" id="taxonomy-input" name="taxonomy" value="{{ taxonomy }}" class="form-control" placeholder="Taxonomy (e.g. Dentist)">
+      <ul id="taxonomy-suggestions" class="list-group position-absolute w-100" style="z-index: 1000; display: none;"></ul>
+    </div>
+    <!-- Search button -->
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary fw-semibold shadow-sm">Search</button>
+    </div>
+  </form>
+
+  <hr class="mb-4">
+  <!-- RESULTS SECTION  -->
+  {% if searched %}
+    {% if providers %}
+          <!-- Show number of results -->
+      <h5 class="text-secondary mb-3">{{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }} found:</h5>
+
+      <div class="mt-3">
+                <!-- Loop through the list of providers -->
+        {% for p in providers %}
+          <div class="card mb-3 border-0 shadow-sm">
+            <div class="card-body">
+               <!-- Provider name -->
+              <h5 class="card-title mb-2 text-dark fw-bold">
+                {{ p.first_name }} {{ p.last_name }}
+              </h5>
+              <!-- Organization -->
+              {% if p.organization_name %}
+                <p class="mb-1"><strong>Organization:</strong> {{ p.organization_name }}</p>
+              {% endif %}
+
+              {% if p.npi_number %}
+                <p class="mb-1"><strong>NPI:</strong> {{ p.npi_number }}</p>
+              {% endif %}
+
+              {% if p.telephone_number %}
+                <p class="mb-1"><strong>Phone:</strong> {{ p.telephone_number }}</p>
+              {% endif %}
+
+              {% if p.address_line %}
+                <p class="mb-1"><strong>Address:</strong> {{ p.address_line }}, {{ p.city }}, {{ p.state }} {{ p.postal_code }}</p>
+              {% endif %}
+
+              {% if p.providertaxonomy_set.all %}
+                <p class="mb-1"><strong>Taxonomies:</strong><br>
+                                    <!-- Loop through taxonomy relations -->
+                  {% for rel in p.providertaxonomy_set.all %}
+                    <span class="badge bg-info text-dark mb-1">
+                      {{ rel.taxonomy.taxonomy_classification }}
+                      {% if rel.taxonomy.taxonomy_specialization %}
+                        ({{ rel.taxonomy.taxonomy_specialization }})
+                      {% endif %}
+                    </span>
+                  {% endfor %}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- PAGINATION SECTION  -->
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <!-- Previous page button -->
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link"
+                 href="?page={{ page_obj.previous_page_number }}&first_name={{ first_name }}&last_name={{ last_name }}&organization={{ organization }}&npi={{ npi }}&taxonomy={{ taxonomy }}&address={{ address }}&city={{ city }}&state={{ state }}&postal_code={{ postal_code }}">
+                 Previous
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+          {% endif %}
+             <!-- Page count display -->
+          <li class="page-item disabled">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          </li>
+          <!-- Next page button -->
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link"
+                 href="?page={{ page_obj.next_page_number }}&first_name={{ first_name }}&last_name={{ last_name }}&organization={{ organization }}&npi={{ npi }}&taxonomy={{ taxonomy }}&address={{ address }}&city={{ city }}&state={{ state }}&postal_code={{ postal_code }}">
+                 Next
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+
+    {% else %}
+          <!-- No results -->
+      <p class="text-muted text-center mt-4">No providers found.</p>
+    {% endif %}
+  {% else %}
+      <!-- If no search was made yet -->
+    <p class="text-muted text-center mt-4">Use the form above to search for healthcare providers.</p>
+  {% endif %}
+</div>
+
+<script>
+  //  Autocomplete taxonomy
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('taxonomy-input');
+    const list = document.getElementById('taxonomy-suggestions');
+    // Trigger autocomplete on typing
+    input.addEventListener('input', async () => {
+      const q = input.value.trim();
+            // Hide list if too few characters
+      if (q.length < 2) {
+        list.style.display = 'none';
+        return;
+      }
+// Fetch suggestions from our Django REST API
+      const res = await fetch(`/api/taxonomies/autocomplete/?q=${q}`);
+      const data = await res.json();
+
+      list.innerHTML = '';
+      if (data.length === 0) {
+        list.style.display = 'none';
+        return;
+      }
+      // Create <li> items dynamically for each suggestion
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.classList.add('list-group-item', 'list-group-item-action');
+        li.textContent = item.taxonomy_classification;
+              // Create <li> items dynamically for each suggestion
+        li.onclick = () => {
+          input.value = item.taxonomy_classification;
+          list.style.display = 'none';
+        };
+        list.appendChild(li);
+      });
+      // Show suggestion box
+      list.style.display = 'block';
+    });
+    // Hide list when clicking outside
+    document.addEventListener('click', e => {
+      if (!input.contains(e.target)) list.style.display = 'none';
+    });
+  });
+</script>
+{% endblock %}
