@@ -63,7 +63,7 @@ def find_provider(request):
             Q(providertaxonomy__taxonomy__taxonomy_classification__icontains=taxonomy) |
             Q(providertaxonomy__taxonomy__taxonomy_specialization__icontains=taxonomy)
         )
- # Efficiently load all taxonomy data with a single additional query
+ # Load all taxonomy data with a single additional query
     providers = providers.prefetch_related(
         Prefetch(
             "providertaxonomy_set",
@@ -94,7 +94,7 @@ def find_provider(request):
     })
 
 
-  #  API VIEWSETS — These return JSON responses (used for APIs or frontend)
+  #  API VIEWSETS
 
 class ProviderViewSet(viewsets.ReadOnlyModelViewSet):
     
