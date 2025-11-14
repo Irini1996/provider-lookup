@@ -2,12 +2,12 @@
 
 The objective of this project is to create a system that allows users to search for and locate Healthcare providers. 
 
-##Data Sources
+## Data Sources
 
-[NPI Registry Search]
+- [NPI Registry Search]
 npiregistry.cms.hhs.gov/search
-[NPPES NPI Files]
+- [NPPES NPI Files]
 download.cms.gov/nppes/NPI_Files.html
-[Provider Taxonomy Codes]
+- [Provider Taxonomy Codes]
 www.nucc.org/index.php/code-sets-mainmenu-41/provider-taxonomy-mainmenu-40/csv-mainmenu-57
 
