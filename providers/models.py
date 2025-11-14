@@ -1,5 +1,3 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 # Provider Model
@@ -60,7 +58,7 @@ class Meta:
 
 
     def __str__(self):
-        # Shows how each Taxonomy will appear as text (in Admin or shell)
+        # Shows how each Taxonomy will appear as text 
         return f"{self.taxonomy_code} - {self.taxonomy_classification}"
     
 
