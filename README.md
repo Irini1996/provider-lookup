@@ -14,25 +14,26 @@ www.nucc.org/index.php/code-sets-mainmenu-41/provider-taxonomy-mainmenu-40/csv-m
 ```mermaid
 flowchart TD
 
-    A[Download NPPES data<br/>(CSV files & documentation)] --> B[Create Django project & app<br/>provider-lookup / providers]
+    A[Download NPPES data (CSV files & documentation)]
+        --> B[Create Django project & app (provider-lookup / providers)]
 
-    B --> C[Design database models<br/>Provider, Taxonomy, ProviderTaxonomy]
-    C --> D[Create and run migrations<br/>(PostgreSQL schema)]
+    B --> C[Design database models: Provider, Taxonomy, ProviderTaxonomy]
+    C --> D[Create and run migrations (PostgreSQL schema)]
 
-    D --> E[Write management command<br/>import_taxonomy<br/>(load taxonomy CSV)]
-    E --> F[Write batched provider import<br/>import_providers_batched<br/>(load 9M+ providers)]
-    F --> G[Write provider-taxonomy linker<br/>import_provider_taxonomies]
+    D --> E[Import taxonomy codes from CSV]
+    E --> F[Import provider records (batch loading)]
+    F --> G[Link providers to taxonomy codes]
 
-    G --> H[Write bulk address updater<br/>update_provider_addresses<br/>using COPY + temp table]
-    H --> I[Add database indexes<br/>on names, NPI, address, taxonomy]
+    G --> H[Update provider addresses using cleaned data]
+    H --> I[Add indexes (NPI, names, taxonomy, ZIP, state)]
 
-    I --> J[Implement serializers<br/>ProviderSerializer, TaxonomySerializer]
-    J --> K[Implement views<br/>find_provider (HTML) + DRF ViewSets]
+    I --> J[Implement serializers]
+    J --> K[Implement views & search logic]
 
-    K --> L[Create HTML template<br/>find_provider.html<br/>search form + results list]
-    L --> M[Add pagination & prefetch_related<br/>(optimize performance)]
+    K --> L[Create HTML template (search form + results)]
+    L --> M[Add pagination & query optimizations]
 
-    M --> N[Redesign UI<br/>gradient background, colours, layout]
-    N --> O[Configure .gitignore<br/>and remove large data files from repo]
-    O --> P[Initialize clean Git repo<br/>and push project to GitHub]
-```
+    M --> N[Redesign UI (gradients, colors, layout)]
+    N --> O[Fix .gitignore & remove large data files]
+
+    O --> P[Initialize clean Git repo & push to GitHub]
