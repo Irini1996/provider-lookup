@@ -21,5 +21,5 @@ L --> M[Add pagination]
 M --> N[Redesign UI]
 N --> O[Fix .gitignore]
 
-O --> P[Push clean repo to GitHub]
+O --> P[Push clean repo to GitHubi]
 ```
