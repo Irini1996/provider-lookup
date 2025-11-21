@@ -12,8 +12,6 @@ The objective of this project is to create a system that allows users to search 
   https://www.nucc.org/index.php/code-sets-mainmenu-41/provider-taxonomy-mainmenu-40/csv-mainmenu-57
 
 
-## Project Workflow
-
 ```mermaid
 flowchart TD
 
@@ -40,4 +38,5 @@ flowchart TD
     N --> O[Fix .gitignore + remove large data files]
 
     O --> P[Initialize clean Git repo + push to GitHub]
+```
 
