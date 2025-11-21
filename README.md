@@ -19,7 +19,7 @@ flowchart TD
         --> B[Create Django project and app: provider-lookup / providers]
 
     B --> C[Design database models: Provider, Taxonomy, ProviderTaxonomy]
-    C --> D[Create and run migrations → PostgreSQL schema]
+    C --> D[Create and run migrations -> PostgreSQL schema]
 
     D --> E[Import taxonomy codes from CSV]
     E --> F[Import provider records (batch loading)]
@@ -38,5 +38,6 @@ flowchart TD
     N --> O[Fix .gitignore + remove large data files]
 
     O --> P[Initialize clean Git repo + push to GitHub]
+
 ```
 
