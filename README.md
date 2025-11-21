@@ -14,11 +14,13 @@ The objective of this project is to create a system that allows users to search 
 flowchart TD
 
 A[Download NPPES data: CSV files + documentation] --> B[Create Django project and app: provider-lookup / providers]
+
 B --> C[Design database models: Provider, Taxonomy, ProviderTaxonomy]
 C --> D[Create and run migrations -> PostgreSQL schema]
 
 D --> E[Import taxonomy codes from CSV]
 E --> F[Import provider records (batch loading)]
+
 F --> G[Link providers with taxonomy codes]
 
 G --> H[Update provider addresses using cleaned data]
@@ -34,6 +36,7 @@ M --> N[Redesign UI: gradients, colors, layout]
 N --> O[Fix .gitignore + remove large data files]
 
 O --> P[Initialize clean Git repo + push to GitHub]
+
 ```
 
 
